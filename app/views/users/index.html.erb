@@ -1,0 +1,44 @@
+<%
+  if params[:type] == 'Admin'
+    user_list = User.where("type = 'Admin'")
+  elsif params[:type] == 'Instructor'
+    user_list = User.where("type = 'Instructor'")
+  elsif params[:type] == 'Student'
+    user_list = User.where("type = 'Student'")
+  else
+    user_list = @users
+  end%>
+
+<%if params[:type] %>
+    <h1>Listing <%=params[:type]%>s</h1>
+<% else %>
+    <h1>Listing all users</h1>
+<% end %>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% user_list.each do |user| %>
+      <tr>
+        <td><%=link_to user.name, user_path(user) %></td>
+        <td><%= user.email %></td>
+        <td><%= user.type %></td>
+        <td><%= link_to 'Profile', user_path(user), class: 'btn btn-warning btn-sm'%></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-warning btn-sm' %></td>
+        <td><%= link_to 'Destroy', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!--<br>-->
+
+<!--<%= link_to 'New User', new_user_path %>-->
