@@ -1,6 +1,6 @@
 class Enrollment < ActiveRecord::Base
   
-  belongs_to :user
+  belongs_to :user 
   belongs_to :course
   validates :user_id, uniqueness: { scope: [:course_id] }
   validates :user_id, presence: true
@@ -26,6 +26,17 @@ class Enrollment < ActiveRecord::Base
       end
     end
     return count
+  end
+  
+  def self.assigned_instructors(course_id)
+    enrollments = Enrollment.where('course_id = ?', course_id)
+    instructors = Array.new
+    enrollments.each do |enrollment|
+      if enrollment.user && (enrollment.user.is_a? Instructor) && (enrollment.status !="Denied")
+        instructors << enrollment.user
+      end
+    end
+    return instructors
   end
 
 end

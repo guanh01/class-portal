@@ -9,11 +9,11 @@ class CoursesController < ApplicationController
     end
     if params[:search]
         @courses = Course.search(params[:search],params[:searchby])
-        if !@courses.is_a? Array
-          @courses.order("course_number ASC")
-        else
+         if !(@courses.is_a? Array)
+           @courses.order("course_number ASC")
+          else
           @courses.sort!{|a,b| a.course_number <=> b.course_number}
-      end
+        end
     else
         @courses = Course.all.order('course_number ASC')
     end
@@ -71,7 +71,8 @@ class CoursesController < ApplicationController
   def destroy
     @course.destroy
     respond_to do |format|
-      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
+      flash[:success] = "Course was successfully destroyed!"
+      format.html { redirect_to courses_url }
       format.json { head :no_content }
     end
   end

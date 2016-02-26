@@ -1,5 +1,7 @@
 class Course < ActiveRecord::Base
-  has_many :enrollments
+  has_many :enrollments, dependent: :destroy
+  has_many :materials , dependent: :destroy
+  
   validates :course_number, :title, :start_date, :end_date, :status, presence: true
   
   
@@ -16,7 +18,7 @@ class Course < ActiveRecord::Base
             enrollments = user.enrollments
             enrollments.each do |enrollment|
               course = enrollment.course
-              if !results.include? course
+              if course && (!results.include? course)
                 results << course
               end
             end
@@ -34,6 +36,5 @@ class Course < ActiveRecord::Base
       where("#{searchby} LIKE ?", "%#{search}%")
     end
   end
-
   
 end

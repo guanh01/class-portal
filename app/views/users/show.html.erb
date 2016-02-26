@@ -33,9 +33,9 @@
 
       <tbody>
       <% @user.enrollments.each do |enrollment| %>
-          <% if enrollment.status != "Denied"%>
+          <% course = Course.find_by(id: enrollment.course_id)%>
+          <% if (enrollment.status != "Denied") && course%>
               <tr>
-                <% course = Course.find_by(id: enrollment.course_id)%>
                 <td><%= link_to course.course_number, course_path(course)%></td>
                 <td><%=course.title%></td>
                 <td><%=course.status%></td>
@@ -49,8 +49,12 @@
                 <% end %>
                 <td><%= link_to 'Drop Course', enrollment, class: 'btn btn-danger btn-sm', method: :delete, data: { confirm: 'Are you sure?' } %></td>
                 
+                <%if current_user.is_a? Instructor%>
+                   <td><%= link_to 'Post Material', new_material_path(course: enrollment.course_id), class: 'btn btn-warning btn-sm'%></td>
+                <%end%>
               </tr>
-          <% end %>
+            
+          <%end%>
       <%end%>
       </tbody>
     </table>

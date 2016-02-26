@@ -61,10 +61,11 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     if (@user.email !='admin@example.com')|| (current_user != @user)
+      user_type = @user.type
       @user.destroy
       respond_to do |format|
         flash[:success] = 'User was successfully destroyed.'
-        format.html { redirect_to users_url}
+        format.html { redirect_to users_url(type: user_type)}
         format.json { head :no_content }
       end
     else 

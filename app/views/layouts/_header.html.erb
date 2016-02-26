@@ -39,9 +39,9 @@
               </ul>
             </li>
           <%end %>
-          <%if current_user.is_a? Instructor %>        
-            <li><%= link_to 'View Courses', courses_path %></li>
-          <%end %>
+          <!--<%if current_user.is_a? Instructor %>        -->
+          <!--  <li><%= link_to 'View Enrollments', enrollments_path %></li>-->
+          <!--<%end %>-->
           <%if current_user.is_a? Student %>
             <li><%= link_to 'Courses', courses_path %></li>
           <%end %>

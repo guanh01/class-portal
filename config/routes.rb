@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
 
+  resources :materials
   resources :enrollments
   resources :courses
   get    'login'   => 'sessions#new'

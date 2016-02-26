@@ -4,7 +4,9 @@ class EnrollmentsController < ApplicationController
   # GET /enrollments
   # GET /enrollments.json
   def index
-    @enrollments = Enrollment.all
+    if current_user.is_a? Admin
+      @enrollments = Enrollment.all
+    end
   end
 
   # GET /enrollments/1

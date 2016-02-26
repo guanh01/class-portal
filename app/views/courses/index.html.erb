@@ -48,10 +48,12 @@
         <td><%= course.start_date %></td>
         <td><%= course.end_date %></td>
         <td><%= course.status %></td>
-        <td><%= link_to 'Show', course, class: 'btn btn-warning btn-sm' %></td>
+        <td><%= link_to 'Show', course, class: 'btn btn-primary btn-sm' %></td>
         <% if ((current_user.is_a? Admin) || (current_user.is_a? Instructor)) && (course.status =="Active") %>
             <td><%= link_to 'Edit', edit_course_path(course), class: 'btn btn-warning btn-sm' %></td>
+            <td><%= link_to 'Post material', new_material_path(course: course.id), class: 'btn btn-warning btn-sm'%></td>
         <%else%>
+            <td><%= link_to ' ', '', class: 'btn btn-disabled btn-sm' %></td>
             <td><%= link_to ' ', '', class: 'btn btn-disabled btn-sm' %></td>
         <% end %>
         <% if current_user.is_a? Admin %>

@@ -15,6 +15,7 @@
 
   <tbody>
     <% @enrollments.each do |enrollment| %>
+    <% if enrollment.user && enrollment.course %>
       <tr>
         <td><%= enrollment.user.name%></td>
         <td><%= enrollment.course.course_number %></td>
@@ -28,8 +29,10 @@
           <td>Instructor</td>
         <%end%>
         <td><%= link_to 'Show', enrollment, class: 'btn btn-primary btn-sm'%></td>
-        <%if enrollment.user.is_a? Student%>
-          <td><%= link_to 'Post Grade', edit_enrollment_path(enrollment) , class: 'btn btn-warning btn-sm'%></td>
+        <%if (enrollment.user.is_a? Student) && (enrollment.grade !=nil)%>
+          <td><%= link_to 'Edit Grade', edit_enrollment_path(enrollment) , class: 'btn btn-warning btn-sm'%></td>
+        <%elsif (enrollment.user.is_a? Student) && (enrollment.grade ==nil)%>
+        <td><%= link_to 'Post Grade', edit_enrollment_path(enrollment) , class: 'btn btn-warning btn-sm'%></td>
         <%else%>
           <td><%= link_to ' ', '', class: 'btn btn-disabled btn-sm' %></td>
         <%end%>
@@ -37,6 +40,7 @@
       </tr>
     <% end %>
   </tbody>
+  <%end%>
 </table>
 
 <br>
