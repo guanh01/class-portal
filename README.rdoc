@@ -9,7 +9,7 @@ Class Portal Web Application using Ruby on Rails
 
 * Configuration: 
 -----------------------------------------------
-User Type \t\t email                    || password
+User Type || email                    || password
 -----------------------------------------------
 Admin     || admin@example.com        || password
 -----------------------------------------------
@@ -20,21 +20,21 @@ Student   || studentone@ncsu.edu      || password
 
 * Database creation:
 
- -User
- -Course
- -Material
- -Enrollment
+ - User
+ - Course
+ - Material
+ - Enrollment
 
 * Database initialization
 
-bundle exec rake db:migrate
-bundle exec rake db:rollback
-bundle exec rake db:migrate VERSION=0
+ - bundle exec rake db:migrate
+ - bundle exec rake db:rollback
+ - bundle exec rake db:migrate VERSION=0
 
 
 * Deployment instructions
 
-rails server -b $IP -p $PORT (on cloud9)
-rails server (on local computer)
+ - rails server -b $IP -p $PORT (on cloud9)
+ - rails server (on local computer)
 
 
