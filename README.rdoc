@@ -9,7 +9,7 @@ Class Portal Web Application using Ruby on Rails
 
 * Configuration: 
 -----------------------------------------------
-User Type || email                    || password
+User Type \t\t email                    || password
 -----------------------------------------------
 Admin     || admin@example.com        || password
 -----------------------------------------------
