@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
 
+  resources :enrollments
   resources :courses
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

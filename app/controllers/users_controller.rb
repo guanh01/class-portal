@@ -29,6 +29,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        if !logged_in?
+          log_in @user
+        end
         flash[:success] = "User was successfully created!"
         format.html { redirect_to user_path(@user)}
         format.json { render :show, status: :created, location: @user }
@@ -45,7 +48,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         flash[:success] = "User was successfully updated!"
-        format.html { redirect_to edit_user_path(@user) }
+        format.html { redirect_to user_path(@user) }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -57,11 +60,19 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      flash[:success] = 'User was successfully destroyed.'
-      format.html { redirect_to users_url}
-      format.json { head :no_content }
+    if (@user.email !='admin@example.com')|| (current_user != @user)
+      @user.destroy
+      respond_to do |format|
+        flash[:success] = 'User was successfully destroyed.'
+        format.html { redirect_to users_url}
+        format.json { head :no_content }
+      end
+    else 
+      respond_to do |format|
+        flash[:danger] = 'Unable to destroy the user.'
+        format.html { redirect_to users_url}
+        format.json { head :no_content }
+      end
     end
   end
 

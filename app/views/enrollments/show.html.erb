@@ -1,0 +1,28 @@
+<p>
+  <strong>User:</strong>
+  <%= @enrollment.user.name %> , <%= @enrollment.user.email %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @enrollment.course.course_number %> , <%= @enrollment.course.title %>
+</p>
+
+
+  
+<% if @enrollment.grade != nil%>
+  <p><strong>Grade:</strong>
+    <%= @enrollment.grade %></p>
+
+<%else%>
+    <p><strong>Grade:</strong> NA</p>
+<%end%>
+
+
+<p>
+  <strong>Status:</strong>
+  <%= @enrollment.status %>
+</p>
+
+<%= link_to 'Edit', edit_enrollment_path(@enrollment) %> |
+<%= link_to 'Back', enrollments_path %>

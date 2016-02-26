@@ -28,5 +28,95 @@
   <%= @course.status %>
 </p>
 
+<% instructors_count = Enrollment.count_instructors(@course.id)%>
+<% if instructors_count ==0 %>
+  <p><strong>Course instructors:</strong>  None </p> 
+<%else%>
+<p><strong>Course instructors:</strong>  </p>
+  <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Instructor name</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+    <tbody>
+    <% @course.enrollments.each do |enrollment| %>
+        <% if enrollment.status=="Approved" %>
+            <% user = User.find(enrollment.user_id)%>
+            <% if user && (user.is_a? Instructor) %>
+              <tr>
+                <td><%= link_to user.name, user%></td>
+                <td><%=user.email%></td>
+                <%if (current_user.is_a? Admin) && (instructors_count>1)%>
+                  <td><%= link_to 'Remove', enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <%end%>
+              </tr>
+            <%end%>
+        <%end%>
+    <%end%>
+    </tbody>
+  </table>
+<%end%>
+<% if !current_user.is_a? Student %>
+  <% students_count = Enrollment.count_students(@course.id)%>
+  <% if students_count ==0 %>
+    <p><strong>Course members:</strong>  None</p>
+    <%else%>
+    <p><strong>Course members:</strong> </p>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Student name</th>
+          <th>Email</th>
+          <th>Enrollment request</th>
+          <th>Grade</th>
+        </tr>
+        </thead>
+  
+        <tbody>
+        <% @course.enrollments.each do |enrollment| %>
+            <% if enrollment.status != "Denied" %>
+                <% user = User.find_by(id: enrollment.user_id)%>
+                <% if user && (user.is_a? Student) %>
+                <tr>
+                  <td><%= link_to user.name, user %></td>
+                  <td><%=user.email%></td>
+                  <% if enrollment.status == "Approved" %>
+                      <td>Approved</td>
+                  <% else %>
+                      <td>
+                        <%= form_for(enrollment) do |f| %>
+                            <%= f.hidden_field :status, :value => "Approved" %>
+                          <div class="actions" , style="float:left;">
+                            <%= f.submit :Approve , class: "btn btn-primary btn-sm"%>
+                          </div>
+                        <%end%>
+                        <%= form_for(enrollment) do |f| %>
+                            <%= f.hidden_field :status, :value => "Denied" %>
+                          <div class="actions" , style="float:left;">
+                            <%= f.submit :Deny, class: "btn btn-primary btn-sm" %>
+                          </div>
+                          <div style="clear:both;">
+                          </div>
+                        <%end%>
+                      </td>
+                  <%end%>
+                  <% if enrollment.grade.blank? %>
+                    <td><%= link_to 'Post Grade', edit_enrollment_path(enrollment), class: 'btn btn-primary btn-sm'%></td>
+                  <% else %>
+                    <td><%=enrollment.grade%></td>
+                  <%end%>
+                  <td><%= link_to 'Remove', enrollment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'%></td>
+                </tr>
+                <%end%>
+            <%end%>
+        <%end%>
+        </tbody>
+      </table>
+      <%end%>
+<%end%>
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
+
+

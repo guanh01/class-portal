@@ -4,7 +4,19 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    if current_user.is_a? Student
+      @enrollment = Enrollment.new
+    end
+    if params[:search]
+        @courses = Course.search(params[:search],params[:searchby])
+        if !@courses.is_a? Array
+          @courses.order("course_number ASC")
+        else
+          @courses.sort!{|a,b| a.course_number <=> b.course_number}
+      end
+    else
+        @courses = Course.all.order('course_number ASC')
+    end
   end
 
   # GET /courses/1
@@ -28,7 +40,9 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.save
-        format.html { redirect_to @course, notice: 'Course was successfully created.' }
+        @enrollment = Enrollment.create(course_id: @course.id, user_id: params[:instructor], status:"Approved")
+        flash[:success] = "Course was successfully created!"
+        format.html { redirect_to @course}
         format.json { render :show, status: :created, location: @course }
       else
         format.html { render :new }
@@ -42,7 +56,8 @@ class CoursesController < ApplicationController
   def update
     respond_to do |format|
       if @course.update(course_params)
-        format.html { redirect_to @course, notice: 'Course was successfully updated.' }
+        flash[:success] = "Course was successfully updated!"
+        format.html { redirect_to @course }
         format.json { render :show, status: :ok, location: @course }
       else
         format.html { render :edit }
@@ -69,6 +84,6 @@ class CoursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params.require(:course).permit(:course_number, :title, :description, :start_date, :end_date, :status)
+      params.require(:course).permit(:course_number, :title, :description, :start_date, :end_date, :status, :instructor)
     end
 end

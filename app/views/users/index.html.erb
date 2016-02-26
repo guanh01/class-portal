@@ -31,9 +31,14 @@
         <td><%=link_to user.name, user_path(user) %></td>
         <td><%= user.email %></td>
         <td><%= user.type %></td>
-        <td><%= link_to 'Profile', user_path(user), class: 'btn btn-warning btn-sm'%></td>
-        <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-warning btn-sm' %></td>
-        <td><%= link_to 'Destroy', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+        <td><%= link_to 'Profile', user_path(user), class: 'btn btn-primary btn-sm'%></td>
+        <!--<td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-warning btn-sm' %></td>-->
+        <% if ((current_user.is_a? Admin) && current_user != user) && user.email != 'admin@example.com' %>
+          <td><%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+        <% end %>
+        <% if (current_user.is_a? Admin) && !(user.is_a? Admin) %>
+          <td><%=link_to 'Enroll', new_enrollment_path(user: user.id), class: 'btn btn-primary btn-sm' %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>
