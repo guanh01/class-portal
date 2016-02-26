@@ -1,28 +1,38 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Class Portal Web Application using Ruby on Rails
 
-Things you may want to cover:
 
-* Ruby version
+* Ruby version: 4.2.2
 
-* System dependencies
+* System dependencies: see Gemfile
 
-* Configuration
+* Configuration: 
+-----------------------------------------------
+User Type | email                    | password
+-----------------------------------------------
+Admin     | admin@example.com        | password
+Instructor| instructor@example.com   | password
+Student   | studentone@ncsu.edu      | password
+-----------------------------------------------
 
-* Database creation
+* Database creation:
+
+ -User
+ -Course
+ -Material
+ -Enrollment
 
 * Database initialization
 
-* How to run the test suite
+bundle exec rake db:migrate
+bundle exec rake db:rollback
+bundle exec rake db:migrate VERSION=0
 
-* Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
 
-* ...
+rails server -b $IP -p $PORT (on cloud9)
+rails server (on local computer)
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
