@@ -8,15 +8,15 @@ Class Portal Web Application using Ruby on Rails
 * System dependencies: see Gemfile
 
 * Configuration: 
------------------------------------------------
-User Type || email                    || password
------------------------------------------------
-Admin     || admin@example.com        || password
------------------------------------------------
-Instructor|| instructor@example.com   || password
------------------------------------------------
-Student   || studentone@ncsu.edu      || password
------------------------------------------------
+       -----------------------------------------------
+       User Type || email                    || password
+       -----------------------------------------------
+       Admin     || admin@example.com        || password
+       -----------------------------------------------
+       Instructor|| instructor@example.com   || password
+       -----------------------------------------------
+       Student   || studentone@ncsu.edu      || password
+       -----------------------------------------------
 
 * Database creation:
 
