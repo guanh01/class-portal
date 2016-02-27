@@ -1,0 +1,41 @@
+== README
+
+Class Portal Web Application using Ruby on Rails
+
+
+* Ruby version: 4.2.2
+
+* System dependencies: see Gemfile
+
+* Configuration: 
+-----------------------------------------------
+User Type || email                    || password
+-----------------------------------------------
+Admin     || admin@example.com        || password
+-----------------------------------------------
+Instructor|| instructor@example.com   || password
+-----------------------------------------------
+Student   || studentone@ncsu.edu      || password
+-----------------------------------------------
+
+* Database creation:
+
+ - User
+ - Course
+ - Material
+ - Enrollment
+
+
+* Database initialization:
+
+ - bundle exec rake db:migrate
+ - bundle exec rake db:rollback
+ - bundle exec rake db:migrate VERSION=0
+
+
+* Deployment instructions:
+
+ - rails server -b $IP -p $PORT (on cloud9)
+ - rails server (on local computer)
+
+
